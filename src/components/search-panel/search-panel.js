@@ -5,7 +5,7 @@ import './search-panel.css';
 const SearchPanel = () => {
    return (
      <span className="d-flex input-group">
-        <input className="search-input mr-auto" placeholder="type to search" />
+        <input type="text" className="form-control" placeholder="type to search" />
         <ItemStatusFilter />
      </span>
    );

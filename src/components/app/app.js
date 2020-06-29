@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
+import AddItem from '../add-item';
 // import ItemStatusFilter from './components/item-status-filter';
 import './app.css';
 
@@ -28,10 +29,27 @@ export default class App extends Component {
     });
   };
 
+  addItem = (text)  => {
+    // generate id
+    
+
+    // add element in array
+
+    this.setState(( {todoData} ) => {
+      const maxId = todoData.reduce((prev, item) => ( prev.id > item.id ? prev.id : item.id ) ) + 1;
+      // console.log(maxId);
+      const newArray = [...todoData, {label: text, important: false, id: maxId, isDone: false }];
+      // console.log(newArray);
+      
+      return {
+        todoData: newArray
+      }
+    });
+  };
+
   render() {
     const done = this.state.todoData.filter((el) => el.isDone === true).length;
     const toDo = this.state.todoData.length - done;
-    console.log(done, toDo);
 
     return (
       <div>
@@ -40,6 +58,7 @@ export default class App extends Component {
         <TodoList 
           todos = { this.state.todoData }
           onDeleted={ this.deleteItem } />
+        <AddItem onAddItem={ this.addItem }/>
       </div>
     );
   }
