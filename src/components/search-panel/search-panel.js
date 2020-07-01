@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ItemStatusFilter from '../item-status-filter';
 import './search-panel.css';
+// import TodoListItem from '../todo-list-item';
 
-const SearchPanel = () => {
-   return (
-     <span className="d-flex input-group">
-        <input type="text" className="form-control" placeholder="type to search" />
-        <ItemStatusFilter />
-     </span>
-   );
- };
- 
-export default SearchPanel;
+export default class SearchPanel extends Component {
+
+  state = {
+    term: ''
+  };
+
+  onSearchChange = (e) => {
+    const term = e.target.value;
+    this.setState({ term });
+
+    this.props.onSearchChange(term);
+
+  };
+
+  render() {
+    return (
+        <form onSubmit={this.onSubmit} className="d-flex input-group">
+          <input type="text" className="form-control" onChange={this.onSearchChange} placeholder="type to search" value={this.state.term} />
+          <ItemStatusFilter />
+        </form>
+    );
+  }
+ }

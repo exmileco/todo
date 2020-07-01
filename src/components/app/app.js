@@ -5,6 +5,7 @@ import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import AddItem from '../add-item';
 // import ItemStatusFilter from './components/item-status-filter';
+
 import './app.css';
 
 export default class App extends Component {
@@ -15,7 +16,8 @@ export default class App extends Component {
       this.createTodoItem('Learn React!'), 
       this.createTodoItem('Build Awesome App!'), 
       this.createTodoItem('Upload to hosting!')
-    ]
+    ],
+    term: ''
   };
 
   createTodoItem(label) {
@@ -86,17 +88,37 @@ onToggleDone = (id) => {
   }); 
 };
 
+search(items, term) {
+  if(items.length === 0) {
+    return items;
+  }
+
+  return items.filter((item) => {
+    return item.label.toLowerCase().indexOf(term.toLowerCase()) > -1;
+  });
+}
+
+onSearchChange = (term) => {
+  this.setState({ term });
+};
+
   render() {
-    const { todoData } = this.state;
+    const { todoData, term } = this.state;
+
+    const visibleItems = this.search(todoData, term);
     const done = todoData.filter((el) => el.done).length;
     const toDo = todoData.length - done;
 
     return (
       <div>
         <AppHeader toDo = { toDo } done = { done } />
-        <SearchPanel />
+        {/* <span className="d-flex input-group"> */}
+          <SearchPanel onSearchChange={ this.onSearchChange } />
+          {/* <ItemStatusFilter />
+        </span> */}
+        
         <TodoList 
-          todos = { todoData }
+          todos = { visibleItems }
           onDeleted={ this.deleteItem } 
           onToggleImportant={this.onToggleImportant}
           onToggleDone={this.onToggleDone}
