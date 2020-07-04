@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ItemStatusFilter from '../item-status-filter';
+// import ItemStatusFilter from '../item-status-filter';
 import './search-panel.css';
 // import TodoListItem from '../todo-list-item';
 
@@ -19,10 +19,7 @@ export default class SearchPanel extends Component {
 
   render() {
     return (
-        <form onSubmit={this.onSubmit} className="d-flex input-group">
           <input type="text" className="form-control" onChange={this.onSearchChange} placeholder="type to search" value={this.state.term} />
-          <ItemStatusFilter />
-        </form>
     );
   }
  }
